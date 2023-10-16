@@ -1,0 +1,53 @@
+Author: Emily Maier
+Last Updated: 02/02/2022
+Purpose: Run E. coli assembly produced by Flye through ABRicate and PlasmidFinder to further analyze E. coli genome. This file contains a copy of all commands and output messages produced while using 
+each tool, as well as comments describing the process.
+
+
+ABRICATE
+Run Flye assembly through ABRicate 1.0.0 to screen contigs for antimicrobial resistance and virulence genes.
+Date: 02/02/2022
+
+[emaier@gra-login1 Flye_136x2]$ abricate assembly.fasta > flyeAbricate.csv
+[mii] loading StdEnv/2020 gcc/9.3.0 abricate/1.0.0 ...
+
+Lmod is automatically replacing "intel/2020.1.217" with "gcc/9.3.0".
+
+abricate databases are located in $EBROOTABRICATE/db
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) openmpi/4.0.3
+
+Using nucl database ncbi:  5386 sequences -  2021-Oct-12
+Processing: assembly.fasta
+Found 5 genes in assembly.fasta
+Tip: have a suggestion for abricate? Tell me at https://github.com/tseemann/abricate/issues
+Done.
+
+Results were moved into Analysis directory.
+Results saved in emaier/scratch/Project1/Analysis/flyeAbricate.csv
+
+No errors were encountered while using ABRicate.
+
+
+PLASMIDFINDER
+Run Flye assembly through PlasmidFinder 2.0: https://cge.cbs.dtu.dk/services/PlasmidFinder/ to identify plasmids.
+Date: 02/02/2022
+Software version 2.0.2 (2020-07-01)
+Database version (2021-11-29)
+
+Enterobacteriales database
+95% threshold for minimum percent identity
+60% minimum coverage
+assembly.fasta file
+
+Plasmid	Identity	Query / Template length	Contig	Position in contig	Note	Accession number
+IncFIA	96.95	394 / 388	contig_14	3690..4078		AP001918
+IncFIB(AP001918)	97.81	685 / 682	contig_14	28823..29506		AP001918
+IncFII	95.4	261 / 261	contig_14	73131..73390		AY458016
+IncFII	95.06	263 / 261	contig_14	86136..86398		AY458016
+IncI1-I(Alpha)	100	142 / 142	contig_15	39187..39328		AP005147
+
+Results saved in emaier/scratch/Project1/Analysis/flyePlasmidFinder.csv
+
+No errors were encountered while using PlasmidFinder 2.0.
