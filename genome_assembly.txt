@@ -1,0 +1,108 @@
+Author: Emily Maier
+Last Updated: 28/01/2022
+Purpose: Assemble E. coli genome using Unicycler and Flye. This file 
+contains a copy of all commands and output messages produced while using 
+each tool, as well as comments describing the process.
+
+Run blast to see which organism the assembly belongs to.
+Use a complete genome database so plasmids and chromosomal DNA can be 
+matched, since plasmids can be transferred between species and are 
+therefore not as reliable for identifying the organism.
+
+UNICYCLER
+[emaier@gra-login3 Unicycler_output]$ module load gcc/9.3.0 blast+/2.12.0
+
+Lmod is automatically replacing "intel/2020.1.217" with "gcc/9.3.0".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) openmpi/4.0.3
+
+[emaier@gra-login3 Unicycler_output]$ wget 
+https://ftp.ncbi.nlm.nih.gov/refseq/release/complete/complete.1.1.genomic.fna.gz
+--2022-01-26 10:35:40--  
+https://ftp.ncbi.nlm.nih.gov/refseq/release/complete/complete.1.1.genomic.fna.gz
+Resolving ftp.ncbi.nlm.nih.gov... 2607:f220:41f:250::228, 
+2607:f220:41f:250::230, 130.14.250.11, ...
+Connecting to ftp.ncbi.nlm.nih.gov|2607:f220:41f:250::228|:443... 
+connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 103435092 (99M) [application/x-gzip]
+Saving to: ‘complete.1.1.genomic.fna.gz’
+
+complete.1.1.genomic.fna.gz       
+100%[==========================================================>]  98.64M  
+42.0MB/s    in 2.3s    
+
+2022-01-26 10:35:43 (42.0 MB/s) - ‘complete.1.1.genomic.fna.gz’ saved 
+[103435092/103435092]
+
+[emaier@gra-login3 Unicycler_output]$ gunzip complete.1.1.genomic.fna.gz
+[emaier@gra-login3 Unicycler_output]$ makeblastdb -in 
+complete.1.1.genomic.fna -dbtype nucl -out genomic_ncbi_1.1_ref.fa
+
+
+Building a new DB, current time: 01/26/2022 10:37:37
+New DB name:   
+/scratch/emaier/Project1/Data/Assembly/Unicycler_output/genomic_ncbi_1.1_ref.fa
+New DB title:  complete.1.1.genomic.fna
+Sequence type: Nucleotide
+Keep MBits: T
+Maximum file size: 1000000000B
+Adding sequences from FASTA; added 23046 sequences in 2.58058 seconds.
+
+
+[emaier@gra-login3 Unicycler_output]$ blastn -db genomic_ncbi_1.1_ref.fa 
+-query 
+/scratch/emaier/Project1/Data/Assembly/Unicycler_output/assembly.fasta 
+-outfmt 6 -out unicycler_match_ncbi.txt
+
+Make sure file is there and view results to make sure the assembly matches 
+E. coli.
+
+[emaier@gra-login3 Unicycler_output]$ ls
+001_best_spades_graph.gfa   006_polished.gfa	      
+genomic_ncbi_1.1_ref.fa.ndb  genomic_ncbi_1.1_ref.fa.ntf
+002_overlaps_removed.gfa    007_rotated.gfa	      
+genomic_ncbi_1.1_ref.fa.nhr  genomic_ncbi_1.1_ref.fa.nto
+003_long_read_assembly.gfa  assembly.fasta	      
+genomic_ncbi_1.1_ref.fa.nin  unicycler.log
+004_bridges_applied.gfa     assembly.gfa	      
+genomic_ncbi_1.1_ref.fa.not  unicycler_match_ncbi.txt
+005_final_clean.gfa	    complete.1.1.genomic.fna  
+genomic_ncbi_1.1_ref.fa.nsq
+[emaier@gra-login3 Unicycler_output]$ less unicycler_match_ncbi.txt 
+
+
+
+FLYE
+emilymaier@Emilys-MacBook-Pro Assignment 1 % makeblastdb -in 
+complete.1.1.genomic.fna -dbtype nucl -out genomic_ncbi_1.1_ref.fa
+
+
+Building a new DB, current time: 01/28/2022 22:32:54
+New DB name:   /Users/emilymaier/Documents/BINF/BINF_6110/Assignment 
+1/genomic_ncbi_1.1_ref.fa
+New DB title:  complete.1.1.genomic.fna
+Sequence type: Nucleotide
+Keep MBits: T
+Maximum file size: 1000000000B
+Adding sequences from FASTA; added 23046 sequences in 2.29332 seconds.
+
+
+emilymaier@Emilys-MacBook-Pro Assignment 1 % blastn -db 
+genomic_ncbi_1.1_ref.fa -query assembly.fasta -outfmt 6 -out 
+flye_match_ncbi.txt
+
+Make sure file is there and view results to make sure the assembly matches 
+E. coli.
+
+emilymaier@Emilys-MacBook-Pro Assignment 1 % ls
+AnalysisLog.txt			complete.1.1.genomic.fna	
+genomic_ncbi_1.1_ref.fa.nhr	genomic_ncbi_1.1_ref.fa.nsq
+Assignment 1.docx		flye_match_ncbi.txt		
+genomic_ncbi_1.1_ref.fa.nin	genomic_ncbi_1.1_ref.fa.ntf
+assembly.fasta			genomic_ncbi_1.1_ref.fa.ndb	
+genomic_ncbi_1.1_ref.fa.not	genomic_ncbi_1.1_ref.fa.nto
+emilymaier@Emilys-MacBook-Pro Assignment 1 % less flye_match_ncbi.txt 
+
