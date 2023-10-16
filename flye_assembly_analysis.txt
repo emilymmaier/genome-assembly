@@ -8,7 +8,7 @@ ABRICATE
 Run Flye assembly through ABRicate 1.0.0 to screen contigs for antimicrobial resistance and virulence genes.
 Date: 02/02/2022
 
-[emaier@gra-login1 Flye_136x2]$ abricate assembly.fasta > flyeAbricate.csv
+[emaier@gra-login1 Flye_136x2]$ abricate assembly.fasta > flye_abricate.csv
 [mii] loading StdEnv/2020 gcc/9.3.0 abricate/1.0.0 ...
 
 Lmod is automatically replacing "intel/2020.1.217" with "gcc/9.3.0".
@@ -25,7 +25,7 @@ Tip: have a suggestion for abricate? Tell me at https://github.com/tseemann/abri
 Done.
 
 Results were moved into Analysis directory.
-Results saved in emaier/scratch/Project1/Analysis/flyeAbricate.csv
+Results saved in emaier/scratch/Project1/Analysis/flye_abricate.csv
 
 No errors were encountered while using ABRicate.
 
